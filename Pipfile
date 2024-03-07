@@ -8,9 +8,12 @@ flask = "*"
 marshmallow = "*"
 requests = "*"
 gunicorn = "*"
-connexion = "*"
+pyjwt = "*"
+connexion = {extras = ["flask", "swagger-ui"], version = "*"}
+uvicorn = "*"
 
 [dev-packages]
+uvicorn = "*"
 
 [requires]
 python_version = "3.11"

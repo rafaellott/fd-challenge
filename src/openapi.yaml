@@ -5,21 +5,14 @@ info:
     email: rafael.lott2@gmail.com
   version: 1.0.11
 servers:
-  - url: https://localhost:8080/
+  - url: http://localhost:8080/
 
 paths:
   /todos:
     get:
       summary: some summary
       description: some description
-      operationId: adapters.endpoints.todos.get_todos
-      parameters:
-        - name: completed
-          in: query
-          description: Status of job
-          required: false
-          schema:
-            type: boolean
+      operationId: main.post_greeting
       responses:
         '200':
           description: successful operation
@@ -45,11 +38,11 @@ components:
           example: Example of a title
 
   securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      name: X-API-KEY
-      in: header
-      x-apikeyInfoFunc: adapters.gateway.security.authentication_process
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: adapters.gateway.security.
 
-security:
-  - ApiKeyAuth: []
+#security:
+#  - bearerAuth: []
