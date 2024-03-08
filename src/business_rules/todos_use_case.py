@@ -3,6 +3,7 @@ import logging
 
 import requests
 
+from entities.todos import TodoSchema
 from .exceptions import BadGatewayException
 
 LOGGER = logging.getLogger("fd_challenge." + __name__)
@@ -36,4 +37,5 @@ class TodosUseCase:
             filter_result = list(filter(lambda x: title.lower() in x["title"].lower(), filter_result))
 
         LOGGER.info("Quantity of items to return: %s", qtd_items)
-        return filter_result[:qtd_items]
+
+        return TodoSchema(many=True).load(filter_result[:qtd_items])

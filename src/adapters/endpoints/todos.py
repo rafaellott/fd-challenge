@@ -15,7 +15,4 @@ def get_todos(completed=None, title=None, qtd_items=5):
         qtd_items = 20
 
     todos_uc = TodosUseCase()
-    data = todos_uc.get_filtered_data(completed, title, qtd_items)
-
-    r = TodoSchema(many=True).load(data)
-    return r
+    return todos_uc.get_filtered_data(completed, title, qtd_items)

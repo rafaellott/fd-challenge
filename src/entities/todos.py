@@ -13,4 +13,4 @@ class TodoSchema(Schema):
 
     class Meta:
         # remove unknown fields
-        unknown = INCLUDE
+        unknown = EXCLUDE
