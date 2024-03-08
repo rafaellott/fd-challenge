@@ -1,8 +1,8 @@
 
 class BaseFdChallengeException(Exception):
 
-    def __init__(self, reason=""):
-        self.reason = reason
+    def __init__(self, message=""):
+        self.message = message
 
 
 class UnauthorizedException(BaseFdChallengeException):
@@ -13,5 +13,5 @@ class ForbiddenException(BaseFdChallengeException):
     pass
 
 
-class ResourceNotFoundException(BaseFdChallengeException):
+class BadGatewayException(BaseFdChallengeException):
     pass

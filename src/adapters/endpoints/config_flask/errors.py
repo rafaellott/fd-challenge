@@ -1,10 +1,9 @@
 import logging
 import traceback
+import json
 from dataclasses import dataclass
-from typing import Tuple
 
-from flask import jsonify, Response
-from flask.app import Flask
+from connexion.lifecycle import ConnexionResponse, ConnexionRequest
 
 from business_rules.exceptions import BaseFdChallengeException
 
@@ -18,11 +17,15 @@ class ErrorMapping:
     status_code: int
     message: str = "An error occurred in the system."
 
+    def __str__(self):
+        """Representation as string."""
+        return self.message
+
 
 ERROR_CODE_MAPPING = {
     # 400s
     "UnauthorizedException": ErrorMapping(
-        401, "User '{username}' does not have permission to access the application.",
+        401, "User does not have permission to access the application.",
     ),
     "ForbiddenException": ErrorMapping(
         403, "You do not have access to this page.",
@@ -39,35 +42,38 @@ ERROR_CODE_MAPPING = {
 }
 
 
-def setup_error_handling(app: Flask) -> None:
+def setup_error_handling(app) -> None:
     """Configure error handling."""
 
-    @app.errorhandler(Exception)
-    def configure_default_error(exception: Exception) -> Tuple[Response, int]:
-        """Generate a response for internal server errors."""
-        return _configure_exception_response(exception)
+    app.add_error_handler(Exception, _configure_exception_response)
+    app.add_error_handler(400, _configure_exception_response)
+    app.add_error_handler(404, _configure_exception_response)
+    app.add_error_handler(405, _configure_exception_response)
 
 
-def _configure_exception_response(exception: Exception) -> Tuple[Response, int]:
+def _configure_exception_response(request: ConnexionRequest, exc: Exception) -> ConnexionResponse:
     """Generate a response for exceptions."""
-    class_name = type(exception).__name__
+
+    class_name = type(exc).__name__
     exception_mapping = ERROR_CODE_MAPPING.get(class_name) or ERROR_CODE_MAPPING["Exception"]
 
     code = exception_mapping.status_code
-    message = str(exception)
-    if not isinstance(exception, BaseFdChallengeException):
+    if not isinstance(exc, BaseFdChallengeException):
+        message = str(exc)
+    else:
         message = exception_mapping.message
 
     if code != 403:
-        LOGGER.error("Exception '%s'", exception)
+        LOGGER.error("Exception '%s'", exc)
         if code >= 400:
             LOGGER.error(traceback.format_exc())
 
-    return (
-        jsonify({
+    return ConnexionResponse(
+        status_code=code,
+        content_type="application/json",
+        body=json.dumps({
             "error": {
                 "reason": message,
             }
-        }),
-        code,
+        })
     )
