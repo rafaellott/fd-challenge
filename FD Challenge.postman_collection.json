@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "54098755-631e-4902-b217-56452efe042c",
+		"name": "FD Challenge",
+		"description": "Contact Support:\n Email: rafael.lott2@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7728249"
+	},
+	"item": [
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "Retrieve the filtered Todos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/todos?completed=<boolean>&title=<string>&qtd_items=5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "<boolean>",
+									"description": "Filter if the job was completed"
+								},
+								{
+									"key": "title",
+									"value": "<string>",
+									"description": "Filter the title"
+								},
+								{
+									"key": "qtd_items",
+									"value": "5",
+									"description": "The max element returned. Maximum value is 20 items"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									],
+									"query": [
+										{
+											"key": "completed",
+											"value": "<boolean>",
+											"description": "Filter if the job was completed",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "<string>",
+											"description": "Filter the title",
+											"disabled": true
+										},
+										{
+											"key": "qtd_items",
+											"value": "5",
+											"description": "The max element returned. Maximum value is 20 items",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<integer>\",\n    \"title\": \"<string>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"title\": \"<string>\"\n  }\n]"
+						},
+						{
+							"name": "Invalid status value",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/todos?completed=not_boolean",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									],
+									"query": [
+										{
+											"key": "completed",
+											"value": "not_boolean",
+											"description": "Filter if the job was completed"
+										},
+										{
+											"key": "title",
+											"value": "<string>",
+											"description": "Filter the title",
+											"disabled": true
+										},
+										{
+											"key": "qtd_items",
+											"value": "5",
+											"description": "The max element returned. Maximum value is 20 items",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/todos?completed=<boolean>&title=<string>&qtd_items=5",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									],
+									"query": [
+										{
+											"key": "completed",
+											"value": "<boolean>",
+											"description": "Filter if the job was completed"
+										},
+										{
+											"key": "title",
+											"value": "<string>",
+											"description": "Filter the title"
+										},
+										{
+											"key": "qtd_items",
+											"value": "5",
+											"description": "The max element returned. Maximum value is 20 items"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Method not allowed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									],
+									"query": [
+										{
+											"key": "completed",
+											"value": "<boolean>",
+											"description": "Filter if the job was completed",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "<string>",
+											"description": "Filter the title",
+											"disabled": true
+										},
+										{
+											"key": "qtd_items",
+											"value": "5",
+											"description": "The max element returned. Maximum value is 20 items",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Method Not Allowed",
+							"code": 405,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "bearerToken",
+			"value": "eyJ1IjoiSFMyNTYiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZnJhbWV3b3JrZGlnaXRhbCJ9.Fuu0Zz3bLDfRXLvjW2MgRN_Ln-bB5w9xcQmzsP3Mqj8",
+			"type": "string"
+		}
+	]
+}
