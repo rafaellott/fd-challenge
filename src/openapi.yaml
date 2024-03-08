@@ -12,7 +12,24 @@ paths:
     get:
       summary: some summary
       description: some description
-      operationId: main.post_greeting
+      operationId: adapters.endpoints.todos.get_todos
+      parameters:
+        - in: query
+          name: completed
+          schema:
+            type: boolean
+          description: Filter if the job was completed
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Filter the title
+        - in: query
+          name: qtd_items
+          schema:
+            type: integer
+            default: 5
+          description: The max element returned. Maximum value is 20 items
       responses:
         '200':
           description: successful operation
@@ -42,7 +59,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: adapters.gateway.security.
+      x-bearerInfoFunc: adapters.gateway.security.decode_token
 
-#security:
-#  - bearerAuth: []
+security:
+  - bearerAuth: []
