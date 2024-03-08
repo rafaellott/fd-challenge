@@ -4,10 +4,12 @@ import json
 from dataclasses import dataclass
 
 from connexion.lifecycle import ConnexionResponse, ConnexionRequest
+from werkzeug.exceptions import HTTPException as wHTTPException
+from starlette.exceptions import HTTPException as sHTTPException
 
 from business_rules.exceptions import BaseFdChallengeException
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger("fd_challenge." + __name__)
 
 
 @dataclass
@@ -56,15 +58,21 @@ def _configure_exception_response(request: ConnexionRequest, exc: Exception) -> 
 
     class_name = type(exc).__name__
     exception_mapping = ERROR_CODE_MAPPING.get(class_name) or ERROR_CODE_MAPPING["Exception"]
+    detail = None
 
     code = exception_mapping.status_code
+    if isinstance(exc, (wHTTPException, sHTTPException)):
+        code = getattr(exc, "code", getattr(exc, "status_code", 500))
+
     if not isinstance(exc, BaseFdChallengeException):
         message = str(exc)
     else:
         message = exception_mapping.message
+        detail = exc.message
 
     if code != 403:
-        LOGGER.error("Exception '%s'", exc)
+        LOGGER.error("Exception: %s", message)
+        LOGGER.error("Exception Detail: %s", detail)
         if code >= 400:
             LOGGER.error(traceback.format_exc())
 

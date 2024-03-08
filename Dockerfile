@@ -38,4 +38,4 @@ USER appuser
 # Install application into container
 COPY src/ .
 
-CMD [ "uvicorn", "--host", "0.0.0.0", "main:app"]
+CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "8080", "main:app"]

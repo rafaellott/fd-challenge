@@ -3,23 +3,23 @@ import jwt
 
 from business_rules.exceptions import UnauthorizedException, ForbiddenException
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger("fd_challenge." + __name__)
 
 AUTHORIZED_USERS = {"frameworkdigital", }
 
 
 def decode_token(token: str):
     LOGGER.info("Decoding token...")
-    print("Decoding token...")
 
     try:
         decoded = jwt.decode(token, "secret_word", algorithms=["HS256"])
         username = decoded.get("username")
-    except (jwt.exceptions.InvalidSignatureError, jwt.exceptions.DecodeError):
-        raise UnauthorizedException()
+        LOGGER.info("Token decoded!")
+    except (jwt.exceptions.InvalidSignatureError, jwt.exceptions.DecodeError) as e:
+        raise UnauthorizedException(message=f"Error whiling decoding token: {e}") from e
 
     if not username:
-        raise UnauthorizedException()
+        raise UnauthorizedException(message="ola vc. vc e eu")
 
     if username not in AUTHORIZED_USERS:
         raise ForbiddenException()

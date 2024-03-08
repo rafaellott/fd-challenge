@@ -5,13 +5,14 @@ info:
     email: rafael.lott2@gmail.com
   version: 1.0.11
 servers:
-  - url: http://localhost:8080/
+  - url: http://localhost:8080
 
 paths:
   /todos:
     get:
-      summary: some summary
-      description: some description
+      summary: Retrieve the filtered Todos
+      tags:
+        - Todos
       operationId: adapters.endpoints.todos.get_todos
       parameters:
         - in: query
@@ -32,7 +33,7 @@ paths:
           description: The max element returned. Maximum value is 20 items
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -41,6 +42,10 @@ paths:
                   $ref: '#/components/schemas/TodosReturn'
         '400':
           description: Invalid status value
+        '401':
+          description: Unauthorized user
+        '405':
+          description: Method not allowed
 
 components:
   schemas:
