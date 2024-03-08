@@ -5,7 +5,7 @@ import connexion
 from adapters.endpoints.config_flask import customize_flask
 
 LOGGER = logging.getLogger("fd_challenge." + __name__)
-app = connexion.App(__name__)
+app = connexion.FlaskApp(__name__)
 application = app.app
 application.url_map.strict_slashes = False
 

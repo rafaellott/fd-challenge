@@ -38,3 +38,10 @@ passing a valid URL to the ENV VAR named `FETCH_URL`. Example below:
 This is not safe, ideally this content should go to ENV VAR.
 - Copy the JWT generated on **ENCODED** field.
 - Add in the **Header** the `Authorization: Bearer <THE-GENERATED-JWT>` 
+
+
+## How to execute the tests?
+
+- In root folder, create the pipenv environment with development libraries, executing the following command: `$ pipenv install --dev`
+- After completion, go to folder **src** `$ cd src/`
+- To run the tests, execute command: `$pytest tests/`

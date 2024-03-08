@@ -11,11 +11,14 @@ gunicorn = "*"
 pyjwt = "*"
 connexion = {extras = ["flask", "swagger-ui"], version = "*"}
 uvicorn = "*"
+pytest = "*"
 
 [dev-packages]
 pytest = "*"
 pytest-sugar = "*"
 pytest-mock = "*"
+httpx = "*"
+starlette = {extras = ["full"], version = "*"}
 
 [requires]
 python_version = "3.11"
